@@ -15,7 +15,7 @@ public class GetRequest {
     private final HttpRequestExecutor executor = HttpRequestExecutor.withSingleClient();
 
     @Test
-    public void getRequestToGoogleDotCom() {
+    public void executeGetRequest() {
         final Response response = executor.execute(
                 RequestBuilder.get("http://imsdemo.herokuapp.com").build()
         );
@@ -26,10 +26,11 @@ public class GetRequest {
     }
 
     @Test
-    public void getRequestToGoogleDotComWith() {
+    public void executePutFormRequest() {
         final Response response = executor.execute(
                 RequestBuilder.
-                        putRequest("http://imsdemo.herokuapp.com/application/create")
+                        putRequest("http://imsdemo.herokuapp.com")
+                        .withPath("/application/create")
                         .withParameter("tweet", "Hello World")
                         .build()
         );

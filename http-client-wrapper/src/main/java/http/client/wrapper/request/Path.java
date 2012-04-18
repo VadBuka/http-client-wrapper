@@ -3,12 +3,12 @@ package http.client.wrapper.request;
 public class Path {
     private String path;
 
-    public static Path parse(String path) {
-        return new Path(path);
+    private Path(String path) {
+        this.path = path;
     }
 
-    public Path(String path) {
-        this.path = path;
+    public static Path parse(String path) {
+        return new Path(path);
     }
 
     public Path replaceParameter(String name, String value) {
