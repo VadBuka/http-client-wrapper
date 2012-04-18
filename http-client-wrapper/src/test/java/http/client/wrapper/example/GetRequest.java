@@ -2,8 +2,7 @@ package http.client.wrapper.example;
 
 import http.client.wrapper.HttpRequestExecutor;
 import http.client.wrapper.request.RequestBuilder;
-import http.client.wrapper.response.HttpResponseWrapper;
-import org.apache.commons.lang.text.StrMatcher;
+import http.client.wrapper.response.Response;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -12,9 +11,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
 public class GetRequest {
+
+    private final HttpRequestExecutor executor = HttpRequestExecutor.withSingleClient();
+
     @Test
-    public void getRequestToGoogleDotCom(){
-        final HttpResponseWrapper response = HttpRequestExecutor.executeRequest(
+    public void getRequestToGoogleDotCom() {
+        final Response response = executor.execute(
                 RequestBuilder.get("http://imsdemo.herokuapp.com").build()
         );
 
@@ -24,8 +26,8 @@ public class GetRequest {
     }
 
     @Test
-    public void getRequestToGoogleDotComWith(){
-        final HttpResponseWrapper response = HttpRequestExecutor.executeRequest(
+    public void getRequestToGoogleDotComWith() {
+        final Response response = executor.execute(
                 RequestBuilder.
                         putRequest("http://imsdemo.herokuapp.com/application/create")
                         .withParameter("tweet", "Hello World")

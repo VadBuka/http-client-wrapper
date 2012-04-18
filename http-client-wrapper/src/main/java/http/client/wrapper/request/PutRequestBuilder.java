@@ -14,9 +14,9 @@ public abstract class PutRequestBuilder<T extends PutRequestBuilder> extends Req
     protected abstract HttpEntity getPutEntity();
 
     @Override
-    public HttpRequestWrapper build() {
+    public Request build() {
         final HttpPut httpPut = new HttpPut(uriBuilder.build());
         httpPut.setEntity(getPutEntity());
-        return new HttpRequestWrapper(httpPut, httpContextBuilder.build());
+        return new Request(httpPut, httpContextBuilder.build());
     }
 }

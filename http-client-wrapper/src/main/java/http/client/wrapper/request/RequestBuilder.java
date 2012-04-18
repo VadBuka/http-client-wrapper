@@ -52,7 +52,7 @@ public abstract class RequestBuilder<T extends RequestBuilder> {
         return thisInstance();
     }
 
-    public abstract HttpRequestWrapper build();
+    public abstract Request build();
 
     @SuppressWarnings("unchecked")
     protected T thisInstance() {

@@ -14,9 +14,9 @@ public abstract class PostRequestBuilder<T extends PostRequestBuilder> extends R
     protected abstract HttpEntity getPostEntity();
 
     @Override
-    public HttpRequestWrapper build() {
+    public Request build() {
         final HttpPost httpPost = new HttpPost(uriBuilder.build());
         httpPost.setEntity(getPostEntity());
-        return new HttpRequestWrapper(httpPost, httpContextBuilder.build());
+        return new Request(httpPost, httpContextBuilder.build());
     }
 }
