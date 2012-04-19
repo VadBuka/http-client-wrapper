@@ -10,7 +10,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 
-public class GetRequest {
+public class AllHttpRequestExample {
 
     private final HttpRequestExecutor executor = HttpRequestExecutor.withSingleClient();
 
