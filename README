@@ -1,1 +1,6 @@
 A handy wrapper over apache HttpClient api.
+
+For usage:
+
+1. You could ether clone this repository and build the package locally.
+2. Download the jar file only.
