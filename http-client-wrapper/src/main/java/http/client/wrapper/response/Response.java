@@ -2,8 +2,11 @@ package http.client.wrapper.response;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.protocol.HttpContext;
+
+import java.util.List;
 
 public class Response {
 
@@ -15,12 +18,15 @@ public class Response {
     private final CookieStore cookieStoreAfterResponse;
     private HttpContext httpContext;
 
+
     public Response(HttpResponse httpResponse, CookieStore cookieStoreAfterResponse) {
         this.cookieStoreAfterResponse = cookieStoreAfterResponse;
+
         final HttpRestResource httpRestResource = new HttpRestResource(httpResponse.getEntity());
         this.contentType = httpRestResource.getContentType();
         this.contentEncoding = httpRestResource.getContentEncoding();
         this.output = httpRestResource.toString();
+
         this.statusCode = httpResponse.getStatusLine().getStatusCode();
         this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
     }
@@ -54,8 +60,8 @@ public class Response {
         return statusMessage;
     }
 
-    public CookieStore getCookieStoreAfterResponse() {
-        return cookieStoreAfterResponse;
+    public List<Cookie> getCookies() {
+        return cookieStoreAfterResponse.getCookies();
     }
 
     public HttpContext getHttpContext() {

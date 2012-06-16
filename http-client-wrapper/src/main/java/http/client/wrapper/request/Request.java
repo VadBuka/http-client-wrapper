@@ -12,7 +12,7 @@ public class Request {
         this.httpContext = httpContext;
     }
 
-    public HttpUriRequest getRequest() {
+    public HttpUriRequest getHttpClientRequest() {
         return request;
     }
 

@@ -17,12 +17,13 @@ public class AllHttpRequestExample {
     @Test
     public void executeGetRequest() {
         final Response response = executor.execute(
-                RequestBuilder.get("http://imsdemo.herokuapp.com").build()
+                RequestBuilder.get("http://thames.herokuapp.com").withPath("/test/get").build()
         );
 
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getContentType(), is("text/html"));
         assertThat(response.getContentEncoding(), is(nullValue()));
+        assertThat(response.getOutput(), is(containsString("Hello World, I support GET.")));
     }
 
     @Test
@@ -38,6 +39,21 @@ public class AllHttpRequestExample {
         assertThat(response.getStatusCode(), is(200));
         assertThat(response.getContentType(), is("text/html"));
         assertThat(response.getOutput(), is(containsString("Hello World (0 seconds ago)")));
+        assertThat(response.getContentEncoding(), is(nullValue()));
+    }
+
+    @Test
+    public void executeDelete() {
+        final Response response = executor.execute(
+                RequestBuilder.
+                        deleteRequest("http://thames.herokuapp.com")
+                        .withPath("/test/delete")
+                        .build()
+        );
+
+        assertThat(response.getStatusCode(), is(200));
+        assertThat(response.getContentType(), is("text/html"));
+        assertThat(response.getOutput(), is(containsString("Hello World, I support DELETE.")));
         assertThat(response.getContentEncoding(), is(nullValue()));
     }
 }

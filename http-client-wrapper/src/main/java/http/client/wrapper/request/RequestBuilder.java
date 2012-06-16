@@ -19,6 +19,10 @@ public abstract class RequestBuilder<T extends RequestBuilder> {
         return new PutStreamEntityRequestBuilder(baseUrl);
     }
 
+    public static DeleteRequestBuilder deleteRequest(String baseUrl) {
+        return new DeleteRequestBuilder(baseUrl);
+    }
+
     public static PostFormRequestBuilder postForm(String baseUrl) {
         return new PostFormRequestBuilder(baseUrl);
     }
