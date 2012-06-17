@@ -1,6 +1,7 @@
 package http.client.wrapper.request;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 
 import java.net.URI;
@@ -14,9 +15,9 @@ public abstract class PostRequestBuilder<T extends PostRequestBuilder> extends R
     protected abstract HttpEntity getPostEntity();
 
     @Override
-    public Request build() {
+    protected HttpPost createHttpUriRequest() {
         final HttpPost httpPost = new HttpPost(uriBuilder.build());
         httpPost.setEntity(getPostEntity());
-        return new Request(httpPost, httpContextBuilder.build());
+        return httpPost;
     }
 }

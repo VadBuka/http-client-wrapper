@@ -3,8 +3,11 @@ package http.client.wrapper.example;
 import http.client.wrapper.HttpRequestExecutor;
 import http.client.wrapper.request.RequestBuilder;
 import http.client.wrapper.response.Response;
+import org.apache.http.HttpHeaders;
+import org.apache.http.protocol.HttpContext;
 import org.junit.Test;
 
+import static org.apache.http.HttpHeaders.CONTENT_TYPE;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -24,6 +27,23 @@ public class AllHttpRequestExample {
         assertThat(response.getContentType(), is("text/html"));
         assertThat(response.getContentEncoding(), is(nullValue()));
         assertThat(response.getOutput(), is(containsString("Hello World, I support GET.")));
+    }
+
+    @Test
+    public void executePutRequest() {
+        final Response response = executor.execute(
+                RequestBuilder.
+                        putRequest("http://thames.herokuapp.com")
+                        .withPath("/test/put")
+                        .withHeader(CONTENT_TYPE, "application/json")
+                        .withData("{\"user\":\"timbaktoo\"}")
+                        .build()
+        );
+
+        assertThat(response.getStatusCode(), is(200));
+        assertThat(response.getContentType(), is("text/html"));
+        assertThat(response.getOutput(), is(containsString("Hello World, I support PUT. {\"user\":\"timbaktoo\"}")));
+        assertThat(response.getContentEncoding(), is(nullValue()));
     }
 
     @Test

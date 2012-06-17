@@ -1,15 +1,22 @@
 package http.client.wrapper.request;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.HttpContext;
 
 import javax.servlet.http.Cookie;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class RequestBuilder<T extends RequestBuilder> {
 
     protected final URIBuilder uriBuilder;
     protected final HttpContextBuilder httpContextBuilder;
+    private final Collection<NameValuePair> headers = new ArrayList<NameValuePair>();
 
     public static GetRequestBuilder get(String baseUrl) {
         return new GetRequestBuilder(baseUrl);
@@ -56,7 +63,38 @@ public abstract class RequestBuilder<T extends RequestBuilder> {
         return thisInstance();
     }
 
-    public abstract Request build();
+    public T withHeader(NameValuePair nameValuePair) {
+        this.headers.add(nameValuePair);
+        return thisInstance();
+    }
+
+    public T withHeader(final String name, final String value) {
+        this.headers.add(new NameValuePair() {
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public String getValue() {
+                return value;
+            }
+        });
+        return thisInstance();
+    }
+
+    public final Request build(){
+        return new Request(enrichedWithHeaders(createHttpUriRequest()), httpContextBuilder.build());
+    }
+
+    private HttpUriRequest enrichedWithHeaders(final HttpUriRequest httpUriRequest) {
+        for (NameValuePair aHeader :this.headers){
+            httpUriRequest.addHeader(aHeader.getName(), aHeader.getValue());
+        }
+        return httpUriRequest;
+    }
+
+    protected abstract HttpUriRequest createHttpUriRequest();
 
     @SuppressWarnings("unchecked")
     protected T thisInstance() {

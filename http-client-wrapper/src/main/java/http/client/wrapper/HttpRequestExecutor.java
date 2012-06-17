@@ -30,6 +30,7 @@ public class HttpRequestExecutor {
     public Response execute(Request request) {
         try {
             final HttpResponse httpResponse = httpClient.execute(request.getHttpClientRequest(), request.getHttpContext());
+
             return new Response(httpResponse, request.getHttpContext());
         } catch (IOException e) {
             throw new RuntimeException(e);

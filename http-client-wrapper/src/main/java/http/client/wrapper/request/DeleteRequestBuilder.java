@@ -16,8 +16,9 @@ public class DeleteRequestBuilder extends RequestBuilder<DeleteRequestBuilder> {
         return thisInstance();
     }
 
-    public Request build() {
-        return new Request(new HttpDelete(uriBuilder.build()), httpContextBuilder.build());
+    @Override
+    protected HttpDelete createHttpUriRequest() {
+        return new HttpDelete(uriBuilder.build());
     }
 
 }

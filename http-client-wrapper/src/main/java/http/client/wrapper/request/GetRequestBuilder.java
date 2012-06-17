@@ -15,8 +15,9 @@ public class GetRequestBuilder extends RequestBuilder<GetRequestBuilder> {
         return thisInstance();
     }
 
-    public Request build() {
-        return new Request(new HttpGet(uriBuilder.build()), httpContextBuilder.build());
+    @Override
+    protected HttpGet createHttpUriRequest() {
+        return new HttpGet(uriBuilder.build());
     }
 
 }
