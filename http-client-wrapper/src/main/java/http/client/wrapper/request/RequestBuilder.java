@@ -4,6 +4,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 
 import javax.servlet.http.Cookie;
@@ -69,17 +70,7 @@ public abstract class RequestBuilder<T extends RequestBuilder> {
     }
 
     public T withHeader(final String name, final String value) {
-        this.headers.add(new NameValuePair() {
-            @Override
-            public String getName() {
-                return name;
-            }
-
-            @Override
-            public String getValue() {
-                return value;
-            }
-        });
+        this.headers.add(new BasicNameValuePair(name, value));
         return thisInstance();
     }
 
